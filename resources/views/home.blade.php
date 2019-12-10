@@ -16,6 +16,22 @@
 
                     You are logged in!
                 </div>
+
+                <div class="card-body">
+                    <div>
+                        <a href="{{url('filter')}}">
+                            Filtro Autor/Género
+                        </a>
+                    </div>
+
+                    <div>
+                        <a href="{{url('filterLoans/'.Auth::user()->id)}}">
+                            Filtro Libros Prestados
+                        </a>
+                    </div>
+                </div>
+
+
             </div>
         </div>
     </div>

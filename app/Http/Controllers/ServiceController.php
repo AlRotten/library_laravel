@@ -9,6 +9,21 @@ use App\User;
 
 class ServiceController extends Controller
 {
+    /*------ GET METHOD -------*/
+    public function getBooksByUser($id) {
+        $response = array('error_code' => 400, 'error_msg' => 'Error inserting info');
+        $user = User::find($id);
+
+        if (empty($user)){
+            $response = array('code' => 404, 'error_msg' => ['Not found']);
+        } else {
+            $books = Books_user::where('user_id', '=', $user->id)->get();
+            $response = array('code' => 200, 'msg' => ['OK']);
+        }
+
+        return view('filterLoans',['books'=> $books]);
+    }
+
     /*------ POST METHOD ------*/
     
     //POST - Deliver One Books
@@ -17,7 +32,7 @@ class ServiceController extends Controller
 
         if ($request->user_id && $request->book_id) {
             $book = Book::find($request->book_id);
-            $user = Book::find($request->user_id);
+            $user = User::find($request->user_id);
 
             if (empty($book) || empty($user)){
                 $response = array('code' => 404, 'error_msg' => ['Not found']);
@@ -27,7 +42,7 @@ class ServiceController extends Controller
                         $service->user_id = $request->user_id;
                         $service->book_id = $request->book_id;
                         $service->delivery_date = date("Y-m-d H:i:s");
-                        $service->return_date = null;
+                        // $service->return_date = null;
                         $service->save();
 
                         $response = array('code' => 200, 'msg' => ['OK']);

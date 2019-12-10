@@ -26,9 +26,9 @@ Route::middleware('auth:api')->put('/service', 'ServiceController@returnOneBook'
 /*------ BOOKS ------*/
 
 //GET
-Route::get('/books/all', 'BooksController@getBooks');
-Route::get('/books/{id}', 'BooksController@getOneBook');
-Route::get('/books', 'BooksController@getBooksByString');
+Route::middleware('auth:api')->get('/books/all', 'BooksController@getBooks');
+Route::middleware('auth:api')->get('/books/{id}', 'BooksController@getOneBook');
+Route::middleware('auth:api')->get('/books', 'BooksController@getBooksByString');
 
 //POST
 Route::middleware('auth:api')->post('/books', 'BooksController@createBook');
@@ -46,7 +46,7 @@ Route::middleware('auth:api')->get('/users/all', 'UsersController@getUsers');
 Route::middleware('auth:api')->get('/users/{id}', 'UsersController@getOneUser');
 
 //POST
-Route::post('/users', 'UsersController@createUser');
+Route::middleware('auth:api')->post('/users', 'UsersController@createUser');
 
 //PUT
 Route::middleware('auth:api')->put('/users', 'UsersController@modifyUser');
